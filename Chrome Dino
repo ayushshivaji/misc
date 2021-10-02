@@ -1,0 +1,48 @@
+from PIL import ImageGrab,ImageOps
+import pyautogui
+import time
+from numpy import *
+
+
+class bot():
+    rplbtn=(483,395)
+    dino = (181,263)
+    t1=0
+    d=0
+    t=0
+
+def restartGame():
+    pyautogui.click(bot.rplbtn)
+    bot.t=0
+
+def pressspace():
+    pyautogui.keyDown('space')
+    print("Jump")
+    time.sleep(0.03)
+    pyautogui.keyUp('space')
+
+def imageGrabn():
+    box=(205,392,245,450)
+    image=ImageGrab.grab(box)
+    grayImage=ImageOps.grayscale(image)
+    a=array(grayImage.getcolors())
+    #print(a.sum())
+    bot.t=a.sum()
+
+def imageGrabd():
+    box=(205,392,245,450)
+    image=ImageGrab.grab(box)
+    grayImage=ImageOps.grayscale(image)
+    a=array(grayImage.getcolors())
+    #print(bot.d)
+    if bot.t==a.sum():
+        bot.d=bot.t
+    #d=1125
+    if a.sum()!=bot.d:
+         pressspace()
+
+
+restartGame()
+while True:
+    imageGrabn()
+    imageGrabd()
